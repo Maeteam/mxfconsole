@@ -5,7 +5,6 @@ Links to the main game
 ### https://store.steampowered.com/app/605230/Grey_Hack/
 ### https://greyhackgame.com/
 
-metaxploit console for easy exploit managements and cool UI/UX
 ## Implemented functions
 - cracking files, encryptions.
 - assign & check info on exploits
@@ -14,7 +13,6 @@ metaxploit console for easy exploit managements and cool UI/UX
 ## to-add
 - post-exploitation running after shell gained
   this could be bank & mail crack or */etc/passwd* or run user-made programs
-- simple vulnerability checker & exploiter
 - port scanner
 - more & more
 
