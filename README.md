@@ -1,4 +1,5 @@
-# mxfconsole v0.61
+# mxfconsole
+latest version: 0.67
 ## Note: this is a project for a game called grey hack.
 the language is basically miniscript with added functions
 Links to the main game
@@ -20,7 +21,9 @@ metaxploit console for easy exploit managements and cool UI/UX
 
 ## Note
 I do not plan whatsoever to add a filesystem management like cd, cat, touch etc..
-I did add ps and ls, but this is an exploitation tool not a shell improviser
+I did add ps, but this is an exploitation tool not a shell improviser
 
-
+## Videos
+### V0.55
 ![mxfconsole](https://github.com/user-attachments/assets/5ab2fec6-94f3-4d1b-a003-81a56380102f)
+### V0.67
