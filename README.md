@@ -23,6 +23,4 @@ I do not plan whatsoever to add a filesystem management like cd, cat, touch etc.
 I did add ps and ls, but this is an exploitation tool not a shell improviser
 
 
-
-https://github.com/user-attachments/assets/842960cd-45c7-4162-989a-66da9db1d370
-
+![mxfconsole](https://github.com/user-attachments/assets/5ab2fec6-94f3-4d1b-a003-81a56380102f)
