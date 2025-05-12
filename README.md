@@ -1,4 +1,4 @@
-# mxfconsole
+# mxfconsole v0.4
 ## Note: this is a project for a game called grey hack.
 the language is basically miniscript with added functions
 Links to the main game
