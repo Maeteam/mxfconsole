@@ -16,6 +16,7 @@ metaxploit console for easy exploit managements and cool UI/UX
   this could be bank & mail crack or */etc/passwd* or run user-made programs
 - simple vulnerability checker & exploiter
 - port scanner
+- more & more
 
 ## Note
 I do not plan whatsoever to add a filesystem management like cd, cat, touch etc..
