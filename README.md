@@ -21,3 +21,7 @@ metaxploit console for easy exploit managements and cool UI/UX
 ## Note
 I do not plan whatsoever to add a filesystem management like cd, cat, touch etc..
 I did add ps and ls, but this is an exploitation tool not a shell improviser
+
+
+https://github.com/user-attachments/assets/fbad4e59-a136-4199-9fa8-f0d7e03095a5
+
