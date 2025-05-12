@@ -10,6 +10,7 @@ Links to the main game
 - assign & check info on exploits
 - msfconsole(real program) inspired UI and commands
 - offline database of exploits
+- simple built in function to attack IPs
 ## to-add
 - post-exploitation running after shell gained
   this could be bank & mail crack or */etc/passwd* or run user-made programs
