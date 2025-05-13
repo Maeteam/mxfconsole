@@ -1,5 +1,6 @@
 # mxfconsole
 latest version: 0.67
+this project is a mockup of the real program called "msfconsole", since the game's exploit library is called metaxploit i thought it would be a funny name
 ## Note: this is a project for a game called grey hack.
 Links to the main game
 ### https://store.steampowered.com/app/605230/Grey_Hack/
