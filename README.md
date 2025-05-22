@@ -1,7 +1,7 @@
 # mxfconsole
 
 latest version: **0.67**  
-this project is a mockup of the real program called `msfconsole`. since the game's exploit library is called **metaxploit**, i thought it would be a funny name.
+this project is a mockup of the real program called `msfconsole`. since the game's exploit library is called **metaxploit** mxfconsole isnt all that bad so i went for it.
 
 ### Note: this is a project for a game called **Grey Hack**.
 - [Grey Hack on Steam](https://store.steampowered.com/app/605230/Grey_Hack/)
@@ -12,9 +12,9 @@ this project is a mockup of the real program called `msfconsole`. since the game
 ### Table of Contents
 1. [About the Project](#about-the-project)
 2. [Features](#features)
-3. [Usage](#how-it-works)
+3. [Usage](#usage)
 4. [To-Add](#to-add)
-5. [Notes](#notes)
+5. [How it works](#how-it-works)
 6. [Videos](#videos)
 7. [Installation](#installation)
 
@@ -33,6 +33,10 @@ this project is a mockup of the real program called `msfconsole`. since the game
 - UI and command style inspired by `msfconsole`
 - Offline database of known exploits
 - Simple built-in function to attack IPs
+
+## Usage
+
+## To add
 
 ## How it works
 
