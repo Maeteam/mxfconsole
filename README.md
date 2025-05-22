@@ -1,103 +1,44 @@
-mxfconsole
+# mxfconsole
 
+latest version: **0.67**  
+this project is a mockup of the real program called `msfconsole`. since the game's exploit library is called **metaxploit**, i thought it would be a funny name.
 
+### Note: this is a project for a game called **Grey Hack**.
 
+- [Grey Hack on Steam](https://store.steampowered.com/app/605230/Grey_Hack/)
+- [Official Website](https://greyhackgame.com/)
 
-Table of Contents
-About the Project
+---
 
-Features
+### Table of Contents
+1. [About the Project](#about-the-project)
+2. [Features](#features)
+3. [Installation](#installation)
+4. [Usage](#usage)
+5. [To-Add](#to-add)
+6. [Notes](#notes)
+7. [Videos](#videos)
 
-Installation
+---
 
-Usage
+## About the Project
 
-Configuration
+**mxfconsole** is an exploitation interface inspired by `msfconsole`, built for use within **Grey Hack**. It replicates some of the familiar behavior and structure of real-life pentesting tools while working entirely within the game's scripting system. It's intended for learning, fun, and gameplay enhancement.
 
-Contributing
+---
 
-License
+## Features
 
-Acknowledgments
+- Cracking files and encryption types
+- Assigning & inspecting information on exploits
+- UI and command style inspired by `msfconsole`
+- Offline database of known exploits
+- Simple built-in function to attack IPs
 
-About the Project
-mxfconsole is a fictional exploitation tool designed for use within the game Grey Hack. It is heavily inspired by the real-world tool Metasploit's msfconsole, tailored for Grey Hack's unique environment. The name "mxfconsole" is a playful twist, aligning with the game's metaxploit exploit library.
+---
 
-This tool provides a familiar terminal interface for exploit execution, vulnerability management, and penetration testing in a sandboxed game world.
+## Installation
 
-⚠️ Note: This project is for Grey Hack only and does not function outside the game's scripting environment.
-
-Built With
-Grey Hack Scripting Language
-
-Mockup of msfconsole UI/CLI principles
-
-Features
-Crack Files & Encryptions: Simplifies brute-forcing and deciphering of file content.
-
-Exploit Info Management: Assign, modify, and inspect exploit metadata in an offline DB.
-
-msfconsole-Inspired UI: Familiar interface with commands like use, set, and run.
-
-Offline Exploit Database: Includes preloaded vulnerabilities for testing and attacks.
-
-Basic IP Attack Functionality: Launch exploits against discovered IPs with one command.
-
-Installation
-Clone the repo:
-
-bash
-Copy
-Edit
-git clone https://github.com/your-username/mxfconsole.git
-Copy the files into your Grey Hack working directory or import them via in-game editor.
-
-Run mxfconsole.gh inside the game.
-
-Usage
-Launch the console within the game and type commands similar to msfconsole:
-
-bash
-Copy
-Edit
-> use exploit/ssh/overflow
-> set RHOST 192.168.0.42
-> run
-Videos
-V0.55 - Getting a Shell via SSH Exploit
-
-
-V0.67 - Printing /etc/passwd of Remote Host
-
-
-Configuration
-Currently minimal. The following can be modified in the script:
-
-Default exploit database path
-
-Interface prompts and behavior
-
-Logging and verbosity
-
-Contributing
-Contributions are welcome! To contribute:
-
-Fork the repository
-
-Create a new branch (git checkout -b feature/my-feature)
-
-Commit your changes (git commit -am 'Add some feature')
-
-Push to the branch (git push origin feature/my-feature)
-
-Create a new Pull Request
-
-License
-Distributed under the MIT License. See LICENSE for more information.
-
-Acknowledgments
-Grey Hack Game
-
-Inspiration from Metasploit Framework
-
-Community feedback from Grey Hack Discord & forums
+1. Clone this repo or copy the script file manually:
+   ```bash
+   git clone https://github.com/your-username/mxfconsole.git
