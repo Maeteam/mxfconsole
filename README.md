@@ -12,17 +12,17 @@ this project is a mockup of the real program called `msfconsole`. since the game
 ### Table of Contents
 1. [About the Project](#about-the-project)
 2. [Features](#features)
-3. [Installation](#installation)
-4. [Usage](#usage)
-5. [To-Add](#to-add)
-6. [Notes](#notes)
-7. [Videos](#videos)
+3. [Usage](#how-it-works)
+4. [To-Add](#to-add)
+5. [Notes](#notes)
+6. [Videos](#videos)
+7. [Installation](#installation)
 
 ---
 
 ## About the Project
 
-**mxfconsole** is an exploitation interface inspired by `msfconsole`, built for use within **Grey Hack**. It replicates some of the familiar behavior and structure of real-life pentesting tools while working entirely within the game's scripting system. It's intended for learning, fun, and gameplay enhancement.
+**mxfconsole** is an exploitation interface inspired by `msfconsole`, built for use within **Grey Hack**. It replicates some of the familiar behavior and structure of real-life pentesting tools while working entirely within the game's scripting system.
 
 ---
 
@@ -36,12 +36,13 @@ this project is a mockup of the real program called `msfconsole`. since the game
 
 ## How it works
 
+The mxfconsole program is able to create info files of exploits, making it very easy to use exploits without having an external file or using brain capacity remembering what exploit does what or even worse, naming them after their library & version.
+with it you just download files into a local database in /database/exploits, the mxfconsole program reads it and is able to run exploits from there making it clear your user folder.
 
-
-# Videos
-## V0.55 Getting a shell via ssh exploit
+##Videos
+### V0.55 Getting a shell via ssh exploit
 ![mxfconsole](https://github.com/user-attachments/assets/5ab2fec6-94f3-4d1b-a003-81a56380102f)
-## V0.67 printing out /etc/passwd of a remote machine
+### V0.67 printing out /etc/passwd of a remote machine
 ![mxfconsole0 6](https://github.com/user-attachments/assets/29e0e6f4-8e08-44c8-8bfe-8132dc7dfae7)
 
 ## Installation
