@@ -52,5 +52,5 @@ with it you just download files into a local database in /database/exploits, the
 ## Installation
 
 You can download/copy the `mxfconsole` file along with `mxfinstaller`
-first run mxfinstaller as admin, the program requires root access for better protection
+first run mxfinstaller as root, the program requires root access for better protection
 if you prefer using singleplayer, modify the script to your needs, then start the mxfconsole script!
