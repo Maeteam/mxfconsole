@@ -33,7 +33,7 @@ this project is a mockup of the real program called `msfconsole`. since the game
 - Assigning & inspecting information on exploits
 - UI and command style inspired by `msfconsole`
 - Offline database of known exploits
-- Simple built-in function automatically scan & exploit vulnerable memory addresses
+- Simple built-in function to automatically scan & exploit vulnerable memory addresses
 
 ## Usage
 
