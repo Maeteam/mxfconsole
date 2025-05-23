@@ -43,7 +43,7 @@ this project is a mockup of the real program called `msfconsole`. since the game
 The mxfconsole program is able to create info files of exploits, making it very easy to use exploits without having an external file or using brain capacity remembering what exploit does what or even worse, naming them after their library & version.
 with it you just download files into a local database in /database/exploits, the mxfconsole program reads it and is able to run exploits from there making it clear your user folder.
 
-##Videos
+## Videos
 ### V0.55 Getting a shell via ssh exploit
 ![mxfconsole](https://github.com/user-attachments/assets/5ab2fec6-94f3-4d1b-a003-81a56380102f)
 ### V0.67 printing out /etc/passwd of a remote machine
