@@ -23,7 +23,7 @@ This project is inspired by the real world program called `msfconsole` since the
 
 **mxfconsole** is an exploitation interface inspired by `msfconsole`, built for use within **Grey Hack**. It replicates some of the familiar behavior and structure of real-life pentesting tools while working entirely within the game's scripting system.
 ### this project's code will go in github as early as possible - estimate: 1 month
-### This program is not capable of completing level 2+ missions by **itself** *for now*
+### This program is not capable of completing level 2+ missions by `itself` *for now*
 ---
 
 ## Features
