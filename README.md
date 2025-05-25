@@ -50,9 +50,9 @@ The mxfconsole program is able to create info files of exploits, making it very 
 with it you just download files into a local database in /database/exploits, the mxfconsole program reads it and is able to run exploits from there making it clear your user folder.
 
 ## Videos
-### V0.55 Getting a shell via ssh exploit
+### v0.55 Getting a shell via ssh exploit
 ![mxfconsole](https://github.com/user-attachments/assets/5ab2fec6-94f3-4d1b-a003-81a56380102f)
-### V0.67 printing out /etc/passwd of a remote machine
+### v0.67 printing out /etc/passwd of a remote machine
 ![mxfconsole0 6](https://github.com/user-attachments/assets/29e0e6f4-8e08-44c8-8bfe-8132dc7dfae7)
 
 ## Installation
