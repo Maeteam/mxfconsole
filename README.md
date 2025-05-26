@@ -42,6 +42,7 @@ This project is inspired by the real world program called `msfconsole` since the
 - Fluent interface and more functions
 - better exploit management
 - more customization
+- msfvenom, create rshell binaries
 
 
 ## How it works
