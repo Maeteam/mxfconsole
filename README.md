@@ -3,7 +3,7 @@
 latest version: **0.67**  
 This project is inspired by the real world program called `msfconsole` since the game's exploit library is called metaxploit, the name is pretty self-explanatory, and it functions and has pretty much the exact same usage.
 <br>
-this tool is mostly for single player and for people who like having some action left rather than a multitool that does everything.
+`this tool is mostly for single player and for people who like having some action left rather than a multitool that does everything.`
 ### Note: this is a project for a game called **Grey Hack**.
 - [Grey Hack on Steam](https://store.steampowered.com/app/605230/Grey_Hack/)
 - [Grey Hack Website](https://greyhackgame.com/)
