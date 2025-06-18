@@ -9,7 +9,7 @@ This project is inspired by the real world program called `msfconsole` since the
 - [Grey Hack Website](https://greyhackgame.com/)
 
 ---
-
+## I will release src code in version 0.8
 ### Table of Contents
 1. [About the Project](#about-the-project)
 2. [Features](#features)
