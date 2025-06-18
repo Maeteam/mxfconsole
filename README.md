@@ -30,7 +30,7 @@ This project is inspired by the real world program called `msfconsole` since the
 
 ## Features
 
-- Cracking files and encryption types
+- Decipher files
 - Assigning & inspecting information on exploits
 - UI and command style inspired by `msfconsole`
 - Offline database of known exploits
