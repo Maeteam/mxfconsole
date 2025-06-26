@@ -1,1 +1,37 @@
-// AVAILALBE IN 0.8
+clear_screen
+turn=0
+print("mxfconsole installer")
+wait(1)
+folders = {0: "exploits", 1: "information", 2: "post"}
+print("<color=#487399>[*]</color> This program requires root access for your safety.")
+rootaccess = user_input("Root Password: ", true)
+wait(2)
+rootshell = get_shell("root", rootaccess)
+if rootshell != null then computer = rootshell.host_computer else exit("<color=#df0000>[-]</color> There was en error while trying to initialize program")
+for i in range(10)
+   print("Loading ["+("#" * (10 - i)) + ("-" * i)+"]\nSetting up..." , true)
+   wait(0.2)
+end for
+fold = computer.create_folder("/", "database")
+if typeof(fold) == "string" then
+   exit("ERROR: "+fold)
+else
+   print("Done")
+end if
+wait(1)
+for i in range(15)
+   print("mfxconsole ["+("#" * (15 - i)) + ("-" * i)+"]\nInstalling...", true)
+   wait(0.2)
+   if i % 5 == 0 and i != 0 then
+      fold = computer.create_folder("/database/", folders[turn])
+      turn = turn+1
+      if typeof(fold) == "string" then
+         exit("ERROR: "+fold)
+      else
+         print("Done")
+		 wait(0.3)
+      end if
+   end if
+end for
+clear_screen
+print("<color=#00ff0c>[+]</color> Mxfconsole Skeleton Installed successfully.")
