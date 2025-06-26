@@ -1,2 +1,470 @@
+exploits = 0
+payloads = 0
+post = 0
+rhost = null
+rport = null
+exploit = null
+exploitnm = null
+quiet = false
+// [+] <color=#00ff0c>[+]</color>
+// [-] <color=#df0000>[-]</color>
+// [*] <color=#487399>[*]</color>
+mxf_print = function(text, leading_spaces, delay, pretext, color)
+    if leading_spaces == null then leading_spaces = 0
+    if delay == null then delay = 0.05
+    if pretext == null then pretext = ""
+    if color == null then color = ""
+    current = "" 
+    mutated = "" 
+    text_chars = text.values
+    print("\n")
+    for i in range(1, text.len)
+        original = text_chars[i-1] 
+        current = current + original
+        if color != "" then 
+            mutated = mutated + "<b><color=#" + color + ">" + original.upper + "</color></b>"
+		else if color == "" then
+            mutated = mutated + original.upper
+        end if
+        print(pretext + " " * leading_spaces + mutated, true)
+        wait(delay) 
+        mutated = current
+    end for
+    print(pretext + " " * leading_spaces + text, true)
+end function
+computer = get_shell.host_computer
+checkforbase = computer.File("/database")
+if checkforbase == null then
+	exit("Offline Database not found\nPlease use mxfinstaller to install database skeleton")
+end if
+expdb = computer.File("/database/exploits")
+if expdb == null then exit("Wrong File structure, exploit database missing.")
+subFiles = expdb.get_files
+for subFile in subFiles
+	exploits = exploits + 1
+end for
 
-// AVAILABLE IN 0.8
+postdb = computer.File("/database/post")
+if postdb == null then exit("Wrong File structure, post-exploit database missing.")
+subFiles = postdb.get_files
+for subFile in subFiles
+	post = post + 1
+end for
+mainroot = null
+if params.len == 0 then
+	clear_screen
+	wait(0.3)
+	print("                     
+    __  __           __         ____  __                 __
+   / / / /___ ______/ /__      / __ \/ / ___ _____  ___ / /_
+  / /_/ / __ `/ ___/ //_/     / /_/ / / __ `/ __ \/ _ \/ __/
+ / __  / /_/ / /__/ ,<       / ____/ / /_/ / / / /  __/ /_
+/_/ /_/\__,_/\___/_/|_|     /_/   /_/\__,_/_/ /_/\___/\__/\n\n       
+       =[         <color=#cc852f>mxfconsole client v0.67  </color>     
++ -- --=[         " + exploits+ " exploits - " + post+ " post         ")
+else if params.len == 1 then
+	if params[0] == "-q" then print()
+	if params[0] == "-h" then exit("Help Menu for mxfconsole - \n<b>-q</b>		quiet mode, start mxfconsole without clearing screen\n<b>-r</b>	 start mxfconsole as root\n<b>-h</b>	 shows this help menu\nmxfconsole (no args) initializes mxfconsole ")
+	if params[0] == "-r" then mainroot = user_input("Enter Root Password: ", true)
+	if params[0] != "-r" and params[0] != "-q" and params[0] != "-h" then exit("Invalid Arguments")
+else
+	print("Invalid Arguments, use `mxfconsole -h` for help")
+end if
+if mainroot != null then
+	shell = get_shell("root", mainroot)
+	if shell != "shell" then exit("<color=#df0000>[-]</color> Root Password Incorrect")
+end if
+metaxploit = include_lib("/lib/metaxploit.so")
+cryptolib = include_lib("/lib/crypto.so")
+if not metaxploit then exit("Metaxploit.so library not found")
+if not cryptolib then exit("Crypto.so library not found")
+while true
+	cmd = user_input("mxf exploit(<#d11616><b>" + exploitnm + "</b></color>) > ")
+	if cmd.indexOf("attack") == 0 then
+		parts = cmd.split(" ")
+		if parts.len != 3 then
+        print("<b>Usage: attack [IP] [PORT]<b>")
+		else
+		address = parts[1]
+		port = parts[2].to_int
+		if port == 0 then
+			lanIp = user_input("Enter Lan: ")
+		end if
+
+		net_session = metaxploit.net_use(address, port)
+		if not net_session then exit("Error: can't connect to net session")
+		metaLib = net_session.dump_lib
+
+		quit = function(shell, pass)
+			print("root password: ")
+			pass = pass.split(":")[1]
+			pass = cryptolib.decipher(pass)
+			print(pass)
+			shell.start_terminal
+		end function
+
+		shell = null
+		pass = null
+		memory = metaxploit.scan(metaLib)
+		for mem in memory
+			address = metaxploit.scan_address(metaLib, mem).split("Unsafe check: ")
+			for add in address 
+				if add == address[0] then continue
+				if shell and pass then quit(shell, pass)
+		
+				value = add[add.indexOf("<b>")+3:add.indexOf("</b>")]
+				value = value.replace("\n", "")
+				if port == 0 then result = metaLib.overflow(mem, value, lanIp)
+				if port != 0 then result = metaLib.overflow(mem, value)
+		
+		
+				if typeof(result) != "shell" and typeof(result) != "computer" then continue
+				if typeof(result) == "shell" then shell = result
+				if typeof(result) == "shell" then comp = result.host_computer
+				if typeof(result) == "computer" then comp = result
+		
+				file = comp.File("/etc/passwd")
+				if not file then continue
+				cont = file.get_content
+				if not cont then continue
+				pass = cont.split("\n")[0]
+				if shell then quit(shell, pass)
+			end for
+		end for
+		if shell then shell.start_terminal
+		if shell then print("<color=#00ff0c>[+]</color> Shell obtained")
+		exit("<color=#df0000>[-]</color> Exploit Failed")
+		end if
+	end if
+	if cmd.indexOf("nmap") == 0 then
+    parts = cmd.split(" ")
+
+    if parts.len != 2 then
+        print("<b>Usage:\nnmap [IP]</b>")
+    else
+        ip = parts[1]
+
+        if not is_valid_ip(ip) then
+            ip_resolved = nslookup(ip)
+            if is_valid_ip(ip_resolved) and ip_resolved != "Not found" then
+                ip = ip_resolved
+            else
+                print("<color=#df0000>[-]</color> Invalid IP address")
+                ip = null
+            end if
+        end if
+        if ip != null then
+            isLanIp = is_lan_ip(ip)
+            if isLanIp then
+                router = get_router
+            else
+                router = get_router(ip)
+            end if
+
+            if router == null then
+                print("<color=#df0000>[-]</color> IP address not found")
+            else
+                if isLanIp then
+                    ports = router.device_ports(ip)
+                else
+                    ports = router.used_ports
+                end if
+
+                if ports == null then
+                    print("<color=#df0000>[-]</color> nmap: IP address not found")
+                else if typeof(ports) == "string" then
+                    print("<color=#df0000>[-]</color> " + ports)
+                else
+                    print("<color=#487399>[+]</color> Starting network mapper")
+                    print("Interesting ports on " + ip + "\n")
+
+                    if ports.len == 0 then
+                        print("<color=#487399>[+]</color> Scan finished. No open ports.")
+                    else
+                        info = "PORT STATE SERVICE VERSION LAN"
+                        for port in ports
+                            service_info = router.port_info(port)
+                            lan_ips = port.get_lan_ip
+                            port_status = "open"
+                            if port.is_closed and not isLanIp then
+                                port_status = "closed"
+                            end if
+                            info = info + "\n" + port.port_number + " " + port_status + " " + service_info + " " + lan_ips
+                        end for
+                        print(format_columns(info) + "\n")
+						rules = router.firewall_rules
+						if rules == "" then print("No Firewall Rules Found")
+						if rules != "" then print("Firewall rules: " + rules.join(", "))
+						print("Kernel_Router: "+router.kernel_version)
+                    end if
+                end if
+            end if
+        end if
+    end if
+end if
+
+
+	if cmd.indexOf("sessions") == 0 then
+		parts = cmd.split(" ")
+		if parts.len == 2 then
+			if parts[1] == "-i" then
+				shells = []
+				while shells.len == 0	
+					shells = metaxploit.rshell_server
+					if(typeof(shells) == "string") then exit(shells)	
+					print("Gathering all open sessions.", true)
+					wait(0.7)
+					print("Gathering all open sessions..", true)
+					wait(0.7)
+					print("Gathering all open sessions...", true)
+					wait(0.7)
+				end while
+				option = 0
+				while typeof(option) != "number" or (option < 1 or option > shells.len)
+					print(shells.len + " shell(s) connected!\n<b>Select a shell to start a terminal:</b>")
+					for i in range(0, shells.len - 1)
+						print("\n<b>Shell (" + (i + 1) + ") "+shells[i].host_computer.get_name+"</b>\nPublic IP: " + shells[i].host_computer.public_ip + "\nLocal IP: " + shells[i].host_computer.local_ip)
+					end for
+					print("-----------")
+					option = user_input("Select shell>").to_int
+				end while
+				print("Starting shell #" + option)
+				shells[option - 1].start_terminal
+			else
+				print("Wrong Syntax or arguments")
+				if parts[1] == "-h" or parts[1] == "--help" then
+					print("<b>sessions</b>     prints out all sessions")
+					print("<b>sessions -i</b>  session interactive mode")
+				end if
+			end if
+		else
+			
+		end if
+	end if
+	if cmd.indexOf("info") == 0 then
+		parts = cmd.split(" ")
+		if parts.len != 2 then
+        print("<b>Usage: info [exploit]<b>")
+		else
+		info_exploit = parts[1]
+		exploit_file = info_exploit + ".md"
+		shell = get_shell()
+		computer = host_computer(shell)
+		exploit_file = File(computer, "/database/information/"+exploit_file)
+		if exploit_file != null then print("Information for Exploit: " + info_exploit+ "\n===================================\n" + get_content(exploit_file)) else print("<color=#df0000>[-]</color> Info file not found, try using the 'assign' command")
+		
+		
+		end if
+	end if
+	if cmd.indexOf("crack") == 0 then
+		parts = cmd.split(" ")
+		if parts.len == 1 then
+        	print("<b>Usage: crack [MD5 HASH]</b>\n		<b>crack -f [PATH/TO/MD5/FILE.txt]</b>")
+		else if parts.len == 2 then
+			crackedpass = cryptolib.decipher(parts[1])
+			print(crackedpass)
+		else if parts.len == 3 then
+			if parts[1] != "-f" then 
+				print("<color=#df0000>[-]</color> Invalid arguments.")
+			else
+				crackfile = parts[2]
+				computer = get_shell.host_computer
+				crackfile = File(computer, parts[2])
+				md5hash = get_content(crackfile)
+				crackedpass = md5hash.split(":")
+				crackedpass = crackedpass[1]
+				crackedpass = cryptolib.decipher(crackedpass)
+				print("Password is: "+ crackedpass)
+			end if
+		end if
+	end if
+	
+	if cmd.indexOf("assign") == 0 then
+		parts = cmd.split(" ")
+		if parts.len != 2 then
+        print("<b>Usage: assign [exploit]<b>")
+		else
+		exploit_file = parts[1]
+		shell = get_shell()
+		computer = host_computer(shell)
+		exploit_file = File(computer, "/database/exploits/"+exploit_file)
+		if exploit_file == null then 
+			print("<color=#df0000>[-]</color> Can't assign info to unexisting exploit")
+		else
+			library = user_input("<color=#487399>[?]</color> What library is the exploit for?(lib): ")
+			lib_ver = user_input("<color=#487399>[?]</color> What version is the exploit for?(x.x.x): ")
+			require = user_input("<color=#487399>[?]</color> What requirements does it need?(split with ,): ")
+			perms = user_input("<color=#487399>[?]</color> What permissions does the exploit gain?: ")
+			description = user_input("<color=#487399>[?]</color> What does the exploit do?: ")
+			print("\nThis Requires Temporary Root access - for your protection")
+			rootpass = user_input("Root Password: ", true)
+			shell = get_shell("root", rootpass)
+			computer = host_computer(shell)
+			exploit_file = parts[1]
+			computer.touch("/database/information", exploit_file+".md")
+			exploit_file = File(computer, "/database/information/"+exploit_file+".md")
+			require = require.split(",")
+			requirements = null
+			for i in range(require.len-1)
+				requirements = requirements + "\n- " + require[i]
+			end for
+			requirements = requirements+"\n"
+			setresult = set_content(exploit_file, description + "\n\n<b>Permissions obtained: </b>" + perms + "\n<b>Target: </b>" + library + " v"+lib_ver + "\n\n<b>Required: </b>" + requirements)
+			if typeof(setresult) == "string" then
+   				print("<color=#df0000>[-]</color> There was an error while setting file content: " + setResult)
+			else if setresult == 0 then
+   				print("<color=#df0000>[-]</color> Couldn't set content")
+			else
+   				print("<color=#00ff0c>[+]</color> Set exploit info successfuly!")
+			end if
+			
+			
+		end if
+		end if
+	end if
+		
+	if cmd.indexOf("show") == 0 then
+		parts = cmd.split(" ")
+		if parts.len != 2 then
+        print("<b>Usage: show [Name]<b>")
+		else
+		
+		if parts[1] == "exploits" then
+			computer = get_shell.host_computer
+			folder = computer.File("/database/exploits")
+			subFiles = folder.get_files
+			print("\nAvailable Exploits")
+			print("==================")
+			for subFile in subFiles
+					nameFile = subFile.name
+					print(nameFile)
+					
+			end for
+		end if
+		if parts[1] == "post" then
+			computer = get_shell.host_computer
+			folder = computer.File("/database/post")
+			subFiles = folder.get_files
+			print("\nAvailable Post")
+			print("==============")
+			for subFile in subFiles
+					nameFile = subFile.name
+					print(nameFile)
+			end for
+		end if
+		end if
+		
+	end if
+if cmd == "options" then
+
+    data = "Name CurrentSetting Required Description\n"
+    data = data + "---- --------------- -------- -----------\n"
+    
+
+    if rhost == "" then
+        data = data + "RHOST (empty) yes TargetIP\n"
+    else
+        data = data + "RHOST " + rhost + " yes TargetIp\n"
+    end if
+    
+    if rport == "" then
+        data = data + "RPORT (empty) yes TargetPort\n"
+    else
+        data = data + "RPORT " + rport + " yes TargetPort\n"
+    end if
+	
+    
+    print(format_columns(data))
+end if
+
+if cmd.indexOf("set") == 0 then
+    parts = cmd.split(" ")
+    
+    if parts.len != 3 then
+        print("<b>Usage: set [Name] [Setting]<b>")
+    else
+        if parts[1] == "RHOST" then 
+			rhost = parts[2] 
+			print("RHOST => " + rhost)
+			end if
+        if parts[1] == "RPORT" then 
+			rport = parts[2]
+			print("RPORT => " + rport)
+			 
+			end if
+            
+        
+    end if
+end if
+if cmd.indexOf("use") == 0 then
+    parts = cmd.split(" ")
+    
+    if parts.len != 2 then
+        print("<b>Usage: use [Exploit]<b>")
+
+    else
+
+		exploit = computer.File("/database/exploits/" + parts[1])
+
+        if exploit then
+			exploitnm = exploit.name
+			print("exploit loaded successfuly") 
+			
+		end if
+		if not exploit then 
+			print("exploit not found") 
+		end if
+    end if
+end if
+if cmd == "help" then
+	print("HELP MENU FOR MXFCONSOLE")
+	print("help        - shows help menu")
+	print("options     - show current settings for exploit")
+	print("set         - set RPORT/RHOST/ETC.. for exploit")
+	print("exploit     - begin exploiting on current options & exploit")
+	print("use         - use exploit/post from database")
+	print("show        - show [(exploits/post)] show files")
+	print("info        - info (exploit) shows info about specified exploit")
+	print("assign      - assign (exploit) assign info for existing exploit")
+	print("crack       - crack (MD5 HASH) decrypts MD5 hashes")
+	print("attack      - attack (IP) (PORT) attacks IPs automatically")
+	print("nmap        - nmap (-a) IP scans IP addressess")
+	print("safe_libs   - safe_libs prints out safe libs version")
+end if
+if cmd.indexOf("nslookup") == 0 then
+	parts = cmd.split(" ")
+	print(nslookup(parts[1]))
+end if
+if cmd == "safe_libs" then
+	parts = cmd.split(" ")
+	if parts.len == 1 then print("All Secure libraries\nkernel_moduel.so = 1.0.0\nnet.so = 1.0.0\ninit.so = 1.0.0\nlibhttp.so = 1.2.3\nlibssh.so = 1.0.5\nlibrshell.so = 1.2.4\nkernel_router.so = 1.0.5")
+end if
+if cmd == "ps" then
+    procs = computer.show_procs
+	print(format_columns(procs))
+end if
+if cmd == "clear" or cmd == "cls" then
+    clear_screen
+end if
+if cmd == "exit" or cmd == "quit" then exit("<color=#487399>[*]</color> Exiting Metaxploit Console...")
+if cmd.indexOf("ls") == 0 then
+    parts = cmd.split(" ")
+	if parts.len == 2 then get_shell.launch("/bin/ls", "-a "+ parts[1])
+end if
+if cmd == "exploit" then
+	if not rhost or not rport then
+        print("<color=#df0000>[-]</color> Invalid target IP or port.")
+        continue
+    end if
+    args = rhost + " " + rport
+	rpass = user_input("Root Password: ", true)
+    print("<color=#487399>[*]</color> Running exploit against " + rhost + ":" + rport)
+	run = get_shell("root", rpass)
+    run.launch("/database/exploits/" + exploit.name, args)
+	break
+
+end if
+
+end while
+
+
