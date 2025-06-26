@@ -1,4 +1,6 @@
 # mxfconsole
+## Sadly - This project is unfinished.
+## I will post 0.67 Right now, you can do whatever you want with the source code.
 
 latest version: **0.67**  
 This project is inspired by the real world program called `msfconsole` since the game's exploit library is called metaxploit, the name is pretty self-explanatory, and it functions and has pretty much the exact same usage.
